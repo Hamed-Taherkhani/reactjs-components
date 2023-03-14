@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export default function SkewLayout({ skewAmount, transitionDuration }) {
+export default function SkewLayout({ children, skewAmount, transitionDuration }) {
   const SKEW_DOMAIN = 6 || skewAmount * 2;
   const element = useRef();
   const skewYValue = useRef(0);
@@ -41,6 +41,6 @@ export default function SkewLayout({ skewAmount, transitionDuration }) {
       style={{
         transition: "200ms" || `${transitionDuration}ms`,
       }}
-    ></div>
+    >{children}</div>
   );
 }
