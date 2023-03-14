@@ -1,0 +1,51 @@
+import { useRef } from "react";
+
+export default function Rotate3DLayout({
+  children,
+  perspective,
+  transitionDuration,
+  onMouseMove,
+}) {
+  const element = useRef();
+
+  const handleMouseMoving = (event) => {
+    const elementRect = element.current.getBoundingClientRect();
+    const width = elementRect.width;
+    const height = elementRect.height;
+    const x = event.clientX - elementRect.left;
+    const y = event.clientY - elementRect.top;
+    const rotate3dValues = {
+      x: -1,
+      y: 1,
+      z: 0,
+      rotate:
+        Math.sqrt(Math.pow(x - width / 2, 2) + Math.pow(y - height / 2, 2)) /
+        (width / 10),
+    };
+
+    if (y >= height / 2) rotate3dValues.x = 1;
+    if (x >= width / 2) rotate3dValues.y = -1;
+
+    // add rotate3d style to element
+    element.current.style.transform = `rotate3d(${rotate3dValues.x}, ${rotate3dValues.y}, ${rotate3dValues.z}, ${rotate3dValues.rotate}deg)`;
+
+    if (onMouseMove) onMouseMove({ clientX: x, clientY: y });
+  };
+
+  const handleMouseLeaving = () => {
+    element.current.style.transform = "";
+  };
+
+  return (
+    <div style={{ perspective: "700px" || perspective }}>
+      <div
+        ref={element}
+        style={{ transitionDuration: "200ms" || transitionDuration }}
+        onMouseMove={handleMouseMoving}
+        onMouseLeave={handleMouseLeaving}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
