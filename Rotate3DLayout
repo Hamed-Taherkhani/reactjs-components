@@ -4,9 +4,11 @@ export default function Rotate3DLayout({
   children,
   perspective,
   transitionDuration,
+  rotateDomain,
   onMouseMove,
 }) {
   const element = useRef();
+  rotateDomain = rotateDomain || 20;
 
   const handleMouseMoving = (event) => {
     const elementRect = element.current.getBoundingClientRect();
@@ -20,7 +22,7 @@ export default function Rotate3DLayout({
       z: 0,
       rotate:
         Math.sqrt(Math.pow(x - width / 2, 2) + Math.pow(y - height / 2, 2)) /
-        (width / 10),
+        (width / rotateDomain),
     };
 
     if (y >= height / 2) rotate3dValues.x = 1;
@@ -37,10 +39,15 @@ export default function Rotate3DLayout({
   };
 
   return (
-    <div style={{ perspective: "700px" || perspective }}>
+    <div
+      style={{ perspective: perspective || "1000px", display: "inline-block" }}
+    >
       <div
         ref={element}
-        style={{ transitionDuration: "200ms" || transitionDuration }}
+        style={{
+          transitionDuration: transitionDuration || "200ms",
+          transitionTimingFunction: "linear",
+        }}
         onMouseMove={handleMouseMoving}
         onMouseLeave={handleMouseLeaving}
       >
