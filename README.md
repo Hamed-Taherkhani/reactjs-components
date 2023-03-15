@@ -1,4 +1,5 @@
 # reactjs-components
+This reposetory includes modern ui materials for ReactJS
 
 ## SkewLayout
 
